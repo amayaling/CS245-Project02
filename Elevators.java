@@ -2,59 +2,113 @@ import java.util.*;
 
 public class Elevators{
 
-	Floors floors = new Floors(); 
+	Floors f = new Floors(); 
+	Passengers pass = new Passengers(); 
+// priority queue sorts in place basically 
+	Queue<Integer> up = new PriorityQueue<>();
+	Queue<Integer> down = new PriorityQueue<>();
 
-	Queue<Passenger> passQ = new LinkedList<>(); 
+	List<Integer> timeList = new ArrayList<>(); // to track time in duration 
 
 
-	boolean direction; // true = up, down = false
-	int floor = floors.getCurrFloor(); // start floor/current floor 
-	int capacity; 
-	int duration; // num of ticks. needs to decrement 
-	String ds; // data structure 
+	//List<Passenger> passenger; 
+	//List<Floors> floors;  
 
-	int elevators = 1; // subject to change 
+	boolean elevatorDirection = true; // moving up 
 
-	if (floor == floors.getNumFloors()){
-		direction = false; 
-	}
+	int capacity = f.getCap(); 
+	int floorNum = f.getCurrFloor(); 
+	int topFloor = f.getNumFloors(); // gets very last floor 
 
-	public void setElevators(int numElevators){
-		elevators = numElevators
-	}
+
+	int passengers = f.generatePassenger(); 
+
+	int numElevators = 1; // at least one elevator, but that is subject to change 
+
+	int duration;
+
 	public void setDuration(int d){
 		duration = d; 
 	}
 
-	public void setDataStructure(String structure){
-		ds = structure; 
-
+	public void setElevators(int elevators){
+		numElevators = elevators; 
 	}
 
-	public void move(boolean upDown){
-		if (upDown == true){
-			floor++; 
+	public boolean move(){
+		if (elevatorDirection){
+			floorNum++; 
+			return true;
+			// if direction is up, its true
+		}else{
+			floorNum--; 
+			return false; 
+		}
+	}
+
+// loading in passengers
+	// was previosuly in floor function but i needed to move it 
+	public void load(){
+		Random r = new Random(); 
+		if (passengers > 0 && passengers <= capacity){
+			int destination = r.nextInt(topFloor) + 1; // getting a number within the range of all the floors 
+			if (destination > floorNum && destination <= topFloor){
+				up.add(destination); 
+			}
+			else{
+				down.add(destination);
+			}
+			elevatorDirection = true; 
+			
+
+		}
+		else if (passengers <= 0){
+			f.generatePassenger();
+			
 		}
 		else{
-			floor--;
+			elevatorDirection = false; // quit moving up, time to move down
+			
+
 		}
 	}
 
-	publicvoid addPassenger(){
-		// adding to the Q.. hmm .. when I unload ill dequeue 
-		Passenger passenger = new Passenger(); 
-		passQ.add(passenger.passenger());
+	public void unload(boolean direction, int floorNum){
+		while ((up.isEmpty() == false) && (down.isEmpty() == false)){
+			if (floorNum == floorNum && direction == true){
+				up.remove(floorNum); 
+			}
+			else if (floorNum == floorNum && direction == false) {
+				down.remove(floorNum); 
+
+			}
+		}
 	}
 
-	if (ds.toLowerCase(contains("array"))){
-		List<Integer> list = new ArrayList<>(); 
+// button is true, create elevators
+	// really need to fix elevator sim and the logic here 
+	// need to make sure the 
+	public void elevatorSim(boolean button){
+		if (button){
+			System.out.println(topFloor);
+			System.out.println(floorNum);
+			System.out.println(passengers);
+			System.out.println(duration);
+			for (int i = 0; i < duration; i++){
+				f.generatePassenger(); // getting a passenger
+				load();
+				elevatorDirection = true; 
+				move(); 
+				if (i == f.getNumFloors()){
+					elevatorDirection = false;
+					move(); // turning that thing around
+					unload(elevatorDirection, floorNum); 
+
+				}
+			}
+
+		}
 	}
-
-
-
 
 }
 
-public class RunElevator{
-
-}
