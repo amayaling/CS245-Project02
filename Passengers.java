@@ -7,19 +7,15 @@ public class Passengers{
 
 	double passenger = 0; 
 
-// who knows if i need these functions 
-	// void startFloor(int floorNum){
-	// 	return floorNum; 
 
-	// }
-	// void endFloor(){
-
-	// }
 
 	public void setPassengerProb(double passengerProb){
 		passenger = passengerProb; 
-		System.out.println(passenger);
 
+	}
+
+	public double getPassengerProb(){
+		return passenger; 
 	}
 
 	public int passenger(){
@@ -28,7 +24,7 @@ public class Passengers{
 		Random r = new Random(); // generating a random double in between the max
 		// nextDouble gives a number between 0 & 1 anyway  
 		double rand = r.nextDouble(); 
-		System.out.println(rand);
+		//System.out.println(rand);
 		if (rand <= passenger){
 			passengerCount += 1; // need to get the floor number or something
 			// passenger count goes up because its in the expected range 
