@@ -1,0 +1,7 @@
+Amaya Ling, Project02 
+
+This project is not perfect and I really did try. I couldn't figure out how to handle more than 1 elevator, so when you implement that will not work. 
+
+I decided to use priority queues because when you remove items, it does it in order. So in this case, the nearest floor even if they just got on the elevator will be removed. 
+
+For running this project, just submit a property file to the command line and everything will be taken care of. 
