@@ -1,15 +1,6 @@
 import java.util.*;
 import java.io.*; 
 
-// global vars
-// String dataStrcuture = "linked" // could change to array
-
-// int floors = 32; // default
-// double passengers = 0.03 // default
-// int elevators = 1; // default 
-// int elevatorCap = 10; // default capacity 
-// int duration = 500; // default 
-// int maxElevator = 2; // this is personal and easier to handle 
 
 public class ElevatorSimulation{
 	public static void main (String[] args) throws Exception{
@@ -20,31 +11,45 @@ public class ElevatorSimulation{
 		*/
 
 
-		boolean button = true; // means button is pressed, set to false when people want to get off 
-
 		// setting up the properties 
 		// these all contain the default properties
 		FileReader defaults = new FileReader("defaultProperties.properties");
-
-		 Properties p = new Properties(); 
-		 Floors f = new Floors(); 
-		 Passengers pr = new Passengers(); 
+// creating the objects 
+		Properties p = new Properties(); 
+		Floors floor = new Floors(); 
+		Passengers pass = new Passengers(); 
+		Elevators e = new Elevators(); 
 
 // if args is null 
-		 if (args.length == 0){
-		 	p.load(defaults);
-		 	int floors = Integer.parseInt(p.getProperty("floors"));
-		 	double passengers = Double.parseDouble(p.getProperty("passengers"));
-		 	
-		 	String dataStructure = p.getProperty("structure"); // somehow need to incorporate different strucutre types 
-		 	int elevators = Integer.parseInt(p.getProperty("elevators"));
-		 	int elevatorCap = Integer.parseInt(p.getProperty("elevatorCapacity"));
-		 	int duration = Integer.parseInt(p.getProperty("duration")); 
+		if (args.length == 0){
+			try{
+				p.load(defaults);
+			 	int floors = Integer.parseInt(p.getProperty("floors"));
+			 	double passengers = Double.parseDouble(p.getProperty("passengers"));
+			 	
+			 	String dataStructure = p.getProperty("structures"); // somehow need to incorporate different strucutre types 
+			 	//dataStructure.toLowerCase();
+			 	int elevators = Integer.parseInt(p.getProperty("elevators"));
+			 	int elevatorCap = Integer.parseInt(p.getProperty("elevatorCapacity"));
+			 	int duration = Integer.parseInt(p.getProperty("duration")); 
 
-		 	pr.setPassengerProb(passengers);
-		 	System.out.println(pr.passenger());
-		 	f.generatePassenger(); 
+			 	floor.setNumFloors(floors);
+			 	e.setTopFloor(floors);
 
+			 	
+			 	e.setDS(dataStructure);
+
+			 	e.setDuration(duration); 
+			 	e.setElevators(elevators); 
+			 	floor.setCap(elevatorCap); 
+			 	e.setCap(elevatorCap);
+			 	e.elevatorSim(); 
+			 	
+			 	e.printResults();
+			 } 
+			 catch (IOException err){
+			 	err.printStackTrace();
+			 }
 
 		 }
 		 else{
@@ -56,10 +61,23 @@ public class ElevatorSimulation{
 			 	int elevators = Integer.parseInt(p.getProperty("elevators"));
 			 	int elevatorCap = Integer.parseInt(p.getProperty("elevatorCapacity"));
 			 	int duration = Integer.parseInt(p.getProperty("duration")); 
+// invoking all of the methods 
+			 	floor.setNumFloors(floors);
+			 	e.setTopFloor(floors);
+
 			 	
+			 	e.setDS(dataStructure);
+
+			 	e.setDuration(duration); 
+			 	e.setElevators(elevators); 
+			 	floor.setCap(elevatorCap); 
+			 	e.setCap(elevatorCap);
+			 	e.elevatorSim(); 
+			 	
+			 	e.printResults();
 		 	}
-		 	catch (IOException e){
-		 		e.printStackTrace();
+		 	catch (IOException err){
+		 		err.printStackTrace();
 		 	}
 		 	
 		 	
