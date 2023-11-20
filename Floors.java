@@ -8,10 +8,13 @@ public class Floors{
 	boolean direction = true; // true means up, false is down. need to implement this somehow 
 
 	Passengers p = new Passengers(); 
-	
-	int startFloor = 1; // but always needs to have more than 1 
+// priority queues bc it removes in a specific order 
+	Queue<Integer> up = new PriorityQueue<>();
+	Queue<Integer> down = new PriorityQueue<>();
 
-	int currFloor; // current floor 
+	
+
+	int currFloor = 1; // current floor , subject to change 
 	int floors; // total number of floors 
 	int passengers; 
 	int destination; // gets a randomly generated floor 
@@ -26,9 +29,6 @@ public class Floors{
 		return capacity; 
 	}
 
-	public void setCurrFloor(int floor){
-		currFloor = floor; 
-	}
 
 	public int getCurrFloor(){
 		return currFloor; // returns current floor number, helps with up or down queue; 
@@ -36,6 +36,7 @@ public class Floors{
 
 	public void setNumFloors(int totalFloors){
 		floors = totalFloors; 
+
 	}
 
 	public int getNumFloors(){
@@ -43,12 +44,48 @@ public class Floors{
 	}
 
 
-	public int generatePassenger(){
+	public void generatePassenger(){
 		passengers = p.passenger(); // passenger count is being set, will affect the queues 
-		
-		return passengers; 
-		//load(); 
-		//System.out.println(passengers);
+		if (passengers > 0){
+			load(); 
+		}
 
 	}
+	public Queue<Integer> upQueue(){
+		return up; // for the unload function in elevator class
+	}
+
+	public Queue<Integer> downQueue(){
+		return down;
+	}
+	
+	public boolean load(){
+		Random r = new Random(); // for random floor 
+		// cant be above 
+		if (passengers > 0 && passengers <= capacity){
+			int destination = r.nextInt(floors) + 1; // getting a number within the range of all the floors 
+			if (destination > currFloor && destination <= floors){
+				up.add(destination); 
+			}
+			else{
+				down.add(destination);
+			}
+			direction = true; 
+
+		}
+		else if (passengers <= 0){
+			generatePassenger();
+			
+		}
+		else{
+			e.elevatorSim(capacity);
+			// need to start unloading, will call the move function in elevator class
+			direction = false; // quit moving up, time to move down
+			
+
+		}
+		return direction; 
+	}
+
+	
 }
