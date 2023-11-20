@@ -4,7 +4,6 @@ public class Passengers{
 
 	boolean direction = true; // true = up, false = down
 	int passengerCount = 0; 
-
 	double passenger = 0; 
 
 
