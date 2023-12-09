@@ -57,7 +57,7 @@ public class ElevatorSimulation{
 			 	p.load(props);
 			 	int floors = Integer.parseInt(p.getProperty("floors"));
 			 	double passengers = Double.parseDouble(p.getProperty("passengers"));
-			 	String dataStructure = p.getProperty("structure");
+			 	String dataStructure = p.getProperty("structures");
 			 	int elevators = Integer.parseInt(p.getProperty("elevators"));
 			 	int elevatorCap = Integer.parseInt(p.getProperty("elevatorCapacity"));
 			 	int duration = Integer.parseInt(p.getProperty("duration")); 
@@ -65,7 +65,6 @@ public class ElevatorSimulation{
 			 	floor.setNumFloors(floors);
 			 	e.setTopFloor(floors);
 
-			 	
 			 	e.setDS(dataStructure);
 
 			 	e.setDuration(duration); 
