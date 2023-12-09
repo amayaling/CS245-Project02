@@ -12,6 +12,8 @@ public class Floors{
 	Queue<Integer> up = new PriorityQueue<>();
 	Queue<Integer> down = new PriorityQueue<>();
 
+	//Elevators es = new Elevators(); 
+
 	
 
 	int currFloor = 1; // current floor , subject to change 
@@ -78,7 +80,7 @@ public class Floors{
 			
 		}
 		else{
-			e.elevatorSim(capacity);
+			//es.elevatorSim();
 			// need to start unloading, will call the move function in elevator class
 			direction = false; // quit moving up, time to move down
 			
